@@ -1,9 +1,11 @@
 # AutoCatify - Vencord userplugin
 
-Randomly catifies your Discord messages. Each word (or the whole message, your
-choice) has a configurable chance of turning into meow, mrrp, purr, nya and
-friends - with random stretching (meeeeooow), ~ decorations, ! punctuation and
-the occasional roleplay action (*purrs*).
+Randomly adds cat sounds between the words of your Discord messages. Your
+words are never changed - meow, mrrp, purr, nya and friends get inserted in
+the gaps between words (never before the first or after the last word, max
+one sound per gap), with random stretching (meeeooow), ~ decorations, !
+punctuation and the occasional roleplay action (*purrs*). Added sounds match
+the capitalisation of the word that follows (SPARTA -> MRRRP).
 
 Never touches: code blocks, inline code, links, mentions, custom emoji,
 `@everyone` / `@here`.
@@ -12,21 +14,19 @@ Never touches: code blocks, inline code, links, mentions, custom emoji,
 
 | Setting | Default | What it does |
 |---|---|---|
-| Mode | Each word separately | Dice roll applies per word, or once for the whole message |
-| Chance | 50% | Catification chance |
+| Mode | Each gap between words | Dice roll applies per gap, or once for the whole message |
+| Chance | 50% | Chance of a sound being added in a gap between words |
 | Stretch | on | Randomly stretch sounds (meow -> meeeeooow) |
-| Keep formatting | on | Preserves case & punctuation (Hello! -> Meow!) |
-| Actions | on | ~12% of replacements are roleplay actions like *purrs* |
+| Actions | on | ~12% of additions are roleplay actions like *purrs* |
 | Catify edits | off | Also roll when editing an already sent message |
 | Extra sounds | empty | Comma separated sounds added to the pool |
 
-Example output (per word, 50%): `can someone MRRP me with the meoooow please`
-Whole message mode: either `Meow mew purrr Mrrow!` or the original text.
+Example output (per gap, 50%): `one mewl two three brrp four five mow! six seven eight nine ten`
 
 ## Install
 
 Prerequisites: Git, Node.js 22+, pnpm. If you don't have pnpm, run
-`corepack enable` (Node ships with corepack).
+`corepack enable` (Node ships with corepack; on Node 25+ use `npm install -g pnpm`).
 
 ### Automated (PowerShell)
 
@@ -58,8 +58,15 @@ Finally, enable **AutoCatify** in Discord under Settings > Vencord > Plugins.
 
 ## Editing the plugin
 
-Change `autocatify\index.ts`, then from the Vencord folder run `pnpm build`
-(or `pnpm watch` while iterating) and restart Discord / reload the extension.
+Change `autocatify\index.ts`, then from the repo root run
+
+```powershell
+.\build.ps1
+```
+
+It copies the plugin into the Vencord clone (`Vencord\src\userplugins`) and
+rebuilds, so the copy can never go stale. Restart Discord / reload the
+extension to see changes.
 
 ## Note
 
